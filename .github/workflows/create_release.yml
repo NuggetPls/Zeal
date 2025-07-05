@@ -73,12 +73,9 @@ jobs:
         shell: bash
         run: |
           CHANGELOG="${{ github.workspace }}-changelog.txt"
-          LAST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
           echo "# Release notes" > $CHANGELOG
           echo ${{ github.event.inputs.release_notes }} >> $CHANGELOG
           echo ""
-          echo "# Changes since $LAST_TAG" >> $CHANGELOG
-          git log --pretty=format:"- %s" $LAST_TAG..HEAD >> $CHANGELOG
           echo filename=$CHANGELOG >> $GITHUB_OUTPUT
 
       - name: Create the github release tag and upload artifacts
